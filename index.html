@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <link rel = "stylesheet" href="./style.css"/>
+    <style>
+      #correoGuardado {
+          margin-top: 10px;
+          color: green;
+      }
+      #btnEliminar {
+          margin-top: 10px;
+      }
+  </style>
+  </head>
+  <body>
+    <p>Este es el primer párrafo.</p>
+    <p>Este es el segundo párrafo.</p>
+    <p>Este es el tercer párrafo.</p>
+    <button id = "button">Cambiar color a azul</button>
+    <h2>Ejercicio 2: Formulario con alerta</h2>
+
+    <label for="texto">Ingresa un texto:</label>
+    <input type="text" id="texto" placeholder="Escribe aquí">
+    <button id="mostrarAlerta">Mostrar Alerta</button>
+
+    <script>
+        // Obtener el botón y el campo de texto
+        const botonAlerta = document.getElementById("mostrarAlerta");
+        const campoTexto = document.getElementById("texto");
+
+        // Función que muestra la alerta con el valor del campo de texto
+        botonAlerta.addEventListener("click", () => {
+            const valorTexto = campoTexto.value;
+            alert(`Has ingresado: ${valorTexto}`);
+        });
+    </script>
+
+
+
+
+<h2>Ejercicio 1: Lista con elementos</h2>
+<ul id="miLista">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+    <li>Elemento 4</li>
+</ul>
+
+<script>
+    // Obtener todos los elementos li dentro del ul
+    const elementosLista = document.querySelectorAll("#miLista li");
+
+    // Recorrer cada elemento li y agregar un evento click
+    elementosLista.forEach((elemento) => {
+        elemento.addEventListener("click", () => {
+            console.log(elemento.textContent);
+        });
+    });
+</script>
+
+
+
+
+
+<h2>Habilitar y deshabilitar campo de texto</h2>
+
+    <input type="text" id="campoTexto" placeholder="Escribe algo aquí...">
+    <br><br>
+    <button id="btnDeshabilitar">Deshabilitar campo de texto</button>
+    <button id="btnHabilitar">Habilitar campo de texto</button>
+
+    <script>
+        // Obtener referencias a los botones y el campo de texto
+        const campoTexto = document.getElementById("campoTexto");
+        const btnDeshabilitar = document.getElementById("btnDeshabilitar");
+        const btnHabilitar = document.getElementById("btnHabilitar");
+
+        // Evento para deshabilitar el campo de texto
+        btnDeshabilitar.addEventListener("click", () => {
+            campoTexto.disabled = true;
+        });
+
+        // Evento para habilitar el campo de texto
+        btnHabilitar.addEventListener("click", () => {
+            campoTexto.disabled = false;
+        });
+    </script>
+
+
+
+<h2>Formulario de correo electrónico</h2>
+
+<form id="formCorreo">
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" id="correo" placeholder="Escribe tu correo" required>
+    <button type="submit">Guardar correo</button>
+</form>
+
+<!-- Div donde se mostrará el correo guardado -->
+<div id="correoGuardado"></div>
+
+<!-- Botón para eliminar el correo guardado -->
+<button id="btnEliminar" style="display: none;">Eliminar correo guardado</button>
+
+<script>
+    // Referencias al DOM
+    const formCorreo = document.getElementById("formCorreo");
+    const inputCorreo = document.getElementById("correo");
+    const divCorreoGuardado = document.getElementById("correoGuardado");
+    const btnEliminar = document.getElementById("btnEliminar");
+
+    // Función para mostrar el correo guardado en el DOM si existe
+    const mostrarCorreoGuardado = () => {
+        const correoGuardado = localStorage.getItem("correo");
+        if (correoGuardado) {
+            divCorreoGuardado.textContent = `Correo guardado: ${correoGuardado}`;
+            divCorreoGuardado.style.display = "block";
+            btnEliminar.style.display = "inline-block";
+        } else {
+            divCorreoGuardado.textContent = "";
+            btnEliminar.style.display = "none";
+        }
+    };
+
+    // Mostrar el correo guardado al cargar la página si existe
+    window.addEventListener("DOMContentLoaded", mostrarCorreoGuardado);
+
+    // Guardar el correo en localStorage cuando se envía el formulario
+    formCorreo.addEventListener("submit", (e) => {
+        e.preventDefault();  // Evitar que el formulario se envíe y recargue la página
+        const correo = inputCorreo.value;
+        localStorage.setItem("correo", correo);  // Guardar el correo en localStorage
+        mostrarCorreoGuardado();  // Mostrar el correo guardado en el DOM
+        formCorreo.reset();  // Limpiar el campo de texto
+    });
+
+    // Eliminar el correo guardado de localStorage
+    btnEliminar.addEventListener("click", () => {
+        localStorage.removeItem("correo");  // Eliminar el correo de localStorage
+        mostrarCorreoGuardado();  // Actualizar la vista
+    });
+</script>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
